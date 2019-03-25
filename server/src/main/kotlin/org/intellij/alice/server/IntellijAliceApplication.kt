@@ -1,20 +1,25 @@
 package org.intellij.alice.server
 
 import io.ktor.application.Application
+import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readText
 import io.ktor.request.header
+import io.ktor.request.receive
+import io.ktor.response.respond
+import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.channels.consumeEach
 import org.intellij.alice.server.connection.AliceTcpServer
 import org.intellij.alice.server.connection.processName
-import org.intellij.alice.server.model.AliceUserInfo
+import org.intellij.alice.server.model.*
 import org.slf4j.LoggerFactory
 import java.text.DateFormat
 
@@ -65,6 +70,15 @@ class IntellijAliceApplication {
                 } ?: run {
                     logger.error("attempt to connect with incorrect headers")
                 }
+            }
+
+            post("/alice-webhook"){
+                val dialog = call.receive<AliceDialog>()
+                logger.info("alice webhook used")
+                call.respond(
+                    HttpStatusCode.OK,
+                    AliceResponce(Response("test"), ResponseSession(dialog.session), "1.0")
+                )
             }
         }
 

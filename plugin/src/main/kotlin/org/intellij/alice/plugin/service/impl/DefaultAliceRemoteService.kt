@@ -23,7 +23,8 @@ class DefaultAliceRemoteService : AliceRemoteService {
 
     override fun connect(name: String, password: String) {
         GlobalScope.launch {
-            client.wssRaw(method = HttpMethod.Get, host = "intellij-alice.herokuapp.com", path = "/", request = {
+//            client.wssRaw(method = HttpMethod.Get, host = "intellij-alice.herokuapp.com", path = "/", request = {
+            client.webSocket(method = HttpMethod.Get, path = "/", request = {
                 this.headers.append("name", name)
             }) {
                 this.incoming.consumeEach { frame ->
