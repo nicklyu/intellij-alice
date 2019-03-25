@@ -11,8 +11,8 @@ class DefaultActionCallService : ActionCallService {
     private val dataManager = DataManager.getInstance()
     private val application = ApplicationManager.getApplication()
 
-    override fun callActionById(id: IntellijActionId) {
-        val action = actionManager.getAction(id.name) ?: return
+    override fun callActionById(id: String) {
+        val action = actionManager.getAction(id) ?: return
         val actionFactory = { dataContext: DataContext ->
             AnActionEvent(
                 null,

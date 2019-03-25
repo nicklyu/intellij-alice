@@ -77,10 +77,15 @@ class IntellijAliceApplication {
 
             post("/alice-webhook"){
                 val dialog = call.receive<AliceDialog>()
-                handler.handle(dialog)
+                val isInvoked = handler.handle(dialog)
+
+                val responseText = if(isInvoked){
+                    "Команда ${dialog.request.command} успешно выполнена"
+                } else
+                    "Команда ${dialog.request.command} не распознана"
                 call.respond(
                     HttpStatusCode.OK,
-                    AliceResponce(Response("test"), ResponseSession(dialog.session), "1.0")
+                    AliceResponce(Response(responseText), ResponseSession(dialog.session), "1.0")
                 )
             }
         }

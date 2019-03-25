@@ -20,6 +20,7 @@ class AliceTcpServer {
     }
 
     fun userLeft(info: AliceUserInfo) {
+        info.dispose()
         users.remove(info)
         logger.info("User  [${info.name}] left. [${userCounter.decrementAndGet()}] users left")
     }

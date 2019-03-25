@@ -7,7 +7,7 @@ import org.intellij.alice.plugin.IntellijActionId
 
 interface ActionCallService {
 
-    fun callActionById(id: IntellijActionId)
+    fun callActionById(id: String)
 
     companion object {
         fun instance(project: Project) = project.service<ActionCallService>()
