@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>intellij-voice.plugin</id>
+    <name>Alice voice plugin</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Nick Inc.</vendor>
+
+    <description><![CDATA[
+        Plugin provides additional way to interact with IDE
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceInterface="org.intellij.alice.plugin.service.ActionCallService"
+                        serviceImplementation="org.intellij.alice.plugin.service.impl.DefaultActionCallService"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
