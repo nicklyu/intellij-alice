@@ -1,0 +1,1 @@
+web: java -jar scarlett-server/build/libs/*all*.jar -port=$PORT
