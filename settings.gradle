@@ -1,0 +1,4 @@
+rootProject.name = 'alice'
+
+include 'plugin'
+include 'server'
