@@ -19,6 +19,7 @@ import io.ktor.websocket.webSocket
 import kotlinx.coroutines.channels.consumeEach
 import org.intellij.alice.server.connection.AliceTcpServer
 import org.intellij.alice.server.connection.processName
+import org.intellij.alice.server.handler.AlicePhraseHandler
 import org.intellij.alice.server.model.*
 import org.slf4j.LoggerFactory
 import java.text.DateFormat
@@ -32,6 +33,8 @@ class IntellijAliceApplication {
     private val logger = LoggerFactory.getLogger(IntellijAliceApplication::class.java)
 
     private val server = AliceTcpServer()
+
+    private val handler = AlicePhraseHandler(server)
 
     fun Application.main() {
         install(CallLogging)
@@ -74,7 +77,7 @@ class IntellijAliceApplication {
 
             post("/alice-webhook"){
                 val dialog = call.receive<AliceDialog>()
-                logger.info("alice webhook used")
+                handler.handle(dialog)
                 call.respond(
                     HttpStatusCode.OK,
                     AliceResponce(Response("test"), ResponseSession(dialog.session), "1.0")

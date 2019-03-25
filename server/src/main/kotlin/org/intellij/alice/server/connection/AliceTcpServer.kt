@@ -24,10 +24,16 @@ class AliceTcpServer {
         logger.info("User  [${info.name}] left. [${userCounter.decrementAndGet()}] users left")
     }
 
-    suspend fun sendMessage(name:String, message: String) {
-        users.filter{ user->user.name == name }.forEach {userInfo->
+    suspend fun sendMessage(name: String, message: String) {
+        users.filter { user -> user.name == name }.forEach { userInfo ->
             userInfo.connection.send(Frame.Text(message))
             logger.info("Message [$message] sent to [${userInfo.name}]")
+        }
+    }
+
+    suspend fun broadcast(message: String) {
+        users.forEach { user ->
+            sendMessage(user.name, message)
         }
     }
 }
