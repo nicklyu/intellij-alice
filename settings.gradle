@@ -1,4 +1,4 @@
-rootProject.name = 'alice'
+rootProject.name = 'intellij-voice'
 
 include 'plugin'
 include 'server'

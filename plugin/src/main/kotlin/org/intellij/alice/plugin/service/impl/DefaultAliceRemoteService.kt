@@ -2,9 +2,7 @@ package org.intellij.alice.plugin.service.impl
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.client.features.websocket.webSocket
-import io.ktor.client.features.websocket.ws
+import io.ktor.client.features.websocket.*
 import io.ktor.client.request.head
 import io.ktor.http.HttpMethod
 import io.ktor.http.cio.websocket.Frame
@@ -25,7 +23,7 @@ class DefaultAliceRemoteService : AliceRemoteService {
 
     override fun connect(name: String, password: String) {
         GlobalScope.launch {
-            client.webSocket(method = HttpMethod.Get, host = "127.0.0.1", port = 8080, path = "/", request = {
+            client.wssRaw(method = HttpMethod.Get, host = "intellij-alice.herokuapp.com", path = "/", request = {
                 this.headers.append("name", name)
             }) {
                 this.incoming.consumeEach { frame ->
